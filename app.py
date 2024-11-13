@@ -48,7 +48,7 @@ class Member(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer)
-    # workouts = db.relationship('Workoutsession', backref='member') # Creates a virtual column that keeps track of the order ids.
+    workouts = db.relationship('Workoutsession', backref='member') # Creates a virtual column that keeps track of the order ids.
 
 class WorkoutSession(db.Model):
     __tablename__ = 'Workoutsessions'
