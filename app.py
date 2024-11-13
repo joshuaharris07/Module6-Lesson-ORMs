@@ -140,16 +140,16 @@ def add_workout():
 
 @app.route("/workoutsessions/<int:session_id>", methods=["PUT"]) 
 def update_workout(session_id):
-    workout = WorkoutSession.query.get_or_404
+    workout = WorkoutSession.query.get_or_404(session_id)
     try:
         workout_data = workout_schema.load(request.json)
     except ValidationError as err:
         return jsonify(err.messages), 400    
     
-    workout_member_id = workout_data['member_id']
-    workout_date = workout_data['date']
-    workout_duration_minutes = workout_data['duration_minutes']
-    workout_calories_burned = workout_data['calories_burned']
+    workout.member_id = workout_data['member_id']
+    workout.date = workout_data['date']
+    workout.duration_minutes = workout_data['duration_minutes']
+    workout.calories_burned = workout_data['calories_burned']
 
     db.session.commit()
     return jsonify({"message": "Workout details updated successfully"}), 200
