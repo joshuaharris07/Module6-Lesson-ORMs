@@ -117,9 +117,12 @@ def get_all_workouts():
     return workouts_schema.jsonify(workouts)
 
 
-@app.route('/workoutsessions/<int:id>', methods=['GET']) #TODO get all workout sessions that relate to a specific member.
-def get_workouts(id):
-    pass
+@app.route('/workoutsessions/<int:member_id>', methods=['GET']) #TODO get all workout sessions that relate to a specific member.
+def workouts_by_member(member_id):
+    workouts = WorkoutSession.query.filter(WorkoutSession.member_id==member_id).all()
+    if not workouts:
+        return jsonify({"error": "No workouts found for that member"})
+    return workouts_schema.jsonify(workouts)
 
 
 @app.route('/workoutsessions', methods=['POST'])
