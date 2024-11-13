@@ -158,7 +158,7 @@ def update_workout(session_id):
 @app.route("/workoutsessions/<int:session_id>", methods=["DELETE"])
 def delete_workout(session_id):   
     workout = WorkoutSession.query.get_or_404(session_id)
-    db.session.delete(session_id)
+    db.session.delete(workout)
     db.session.commit()
     return jsonify({"message": "Workout removed successfully"}), 200
     
