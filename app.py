@@ -90,14 +90,14 @@ def add_member():
 
 @app.route("/members/<int:id>", methods=["PUT"]) 
 def update_member(id):
-    member = Member.query.get_or_404
+    member = Member.query.get_or_404(id)
     try:
         member_data = member_schema.load(request.json)
     except ValidationError as err:
         return jsonify(err.messages), 400    
     
-    member_name = member_data['name']
-    member_age = member_data['age']
+    member.name = member_data['name']
+    member.age = member_data['age']
 
     db.session.commit()
     return jsonify({"message": "Member details updated successfully"}), 200
